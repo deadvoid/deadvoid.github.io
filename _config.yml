@@ -1,2 +1,3 @@
 name: some jrk, world ctzn
 markdown: kramdown
+permalink: /blog/:year/:month/:day/:title
