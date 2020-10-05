@@ -12,27 +12,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: ${{ github.event.client_payload.repository }}
-          ref: ${{ github.event.client_payload.sha }}
-          # Relative path under $GITHUB_WORKSPACE to place the repository
-          path: master
-
-      - name: print env?
+          remote_repository: ${{ github.event.client_payload.repository }}
+          remote_ref: ${{ github.event.client_payload.sha }}
+        env:
+          remote_repository: ${{ github.event.client_payload.repository }}
+          remote_ref: ${{ github.event.client_payload.sha }}
         run: |
-          echo GITHUB_REF        = $GITHUB_REF
-          echo GITHUB_SHA        = $GITHUB_SHA
-          echo GITHUB_WORKFLOW   = $GITHUB_WORKFLOW
-          echo HOME              = $HOME
-          echo GITHUB_ACTION     = $GITHUB_ACTION
-          echo GITHUB_ACTIONS    = $GITHUB_ACTIONS
-          echo GITHUB_ACTOR      = $GITHUB_ACTOR
-          echo GITHUB_REPOSITORY = $GITHUB_REPOSITORY
-          echo GITHUB_EVENT_NAME = $GITHUB_EVENT_NAME
-          echo GITHUB_EVENT_PATH = $GITHUB_EVENT_PATH
-          echo GITHUB_WORKSPACE  = $GITHUB_WORKSPACE
-
-      - name: git check
-        run: |
+          echo "${{ toJson(github) }}"
           git remote -v
+          git add .
           git status
-          # git push
+
+        # git push
