@@ -32,6 +32,7 @@ jobs:
           echo GITHUB_WORKSPACE  = $GITHUB_WORKSPACE
 
       - name: git check
+        run: |
           git remote -v
           git status
           # git push
