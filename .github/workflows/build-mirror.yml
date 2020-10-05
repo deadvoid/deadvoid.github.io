@@ -10,15 +10,20 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+
+      - id: checkout
+        uses: actions/checkout@v2
         with:
           remote_repository: ${{ github.event.client_payload.repository }}
           remote_ref: ${{ github.event.client_payload.sha }}
         env:
           remote_repository: ${{ github.event.client_payload.repository }}
           remote_ref: ${{ github.event.client_payload.sha }}
+
+      - name: integrate
         run: |
           echo "${{ toJson(github) }}"
+          echo "${{ checkout.env.remote_ref }}"
           git remote -v
           git add .
           git status
