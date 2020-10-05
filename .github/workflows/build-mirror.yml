@@ -10,8 +10,8 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      remote_repository: ${{ github.event.client_payload.repository }}
-      remote_origin: ${{ github.event.client_payload.origin }}
+      repository: ${{ github.event.client_payload.repository }}
+      remote_branch: ${{ github.event.client_payload.branch }}
 
     steps:
 
@@ -19,14 +19,14 @@ jobs:
         id: checkout
         uses: actions/checkout@v2
         with:
-          remote_repository: ${{ env.repository }}
-          remote_origin: ${{ env.remote_origin }}
+          repository: ${{ env.repository }}
+          remote_branch: ${{ env.remote_branch }}
 
       - name: Mirror
         id: integration
         run: |
           echo $PWD
-          echo "${{ env.remote_repository }}"
+          echo "${{ env.repository }}"
           ls -la
           git remote -v
           git add .
