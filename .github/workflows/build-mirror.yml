@@ -9,21 +9,25 @@ jobs:
     # build static mirror of oleng.github.io
 
     runs-on: ubuntu-latest
+    env:
+      remote_repository: ${{ github.event.client_payload.repository }}
+      remote_origin: ${{ github.event.client_payload.origin }}
+
     steps:
 
-      - id: checkout
+      - name: Checkout remote branch
+        id: checkout
         uses: actions/checkout@v2
         with:
-          remote_repository: ${{ github.event.client_payload.repository }}
-          remote_ref: ${{ github.event.client_payload.sha }}
-        env:
-          remote_repository: ${{ github.event.client_payload.repository }}
-          remote_ref: ${{ github.event.client_payload.sha }}
+          remote_repository: ${{ env.repository }}
+          remote_origin: ${{ env.remote_origin }}
 
-      - name: integrate
+      - name: Mirror
+        id: integration
         run: |
-          echo "${{ toJson(github) }}"
-          echo "${{ checkout.env.remote_ref }}"
+          echo $PWD
+          echo "${{ env.remote_repository }}"
+          ls -la
           git remote -v
           git add .
           git status
