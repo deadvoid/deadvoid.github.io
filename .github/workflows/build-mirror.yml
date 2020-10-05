@@ -1,4 +1,6 @@
-on
+name: Build mirror
+
+on:
   repository_dispatch:
     types: [build-mirror]
 
